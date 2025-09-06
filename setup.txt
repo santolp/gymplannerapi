@@ -1,0 +1,88 @@
+# 📄 setup.txt
+
+## 🔧 Requisitos previos
+- **Node.js** (v18+ recomendado)  
+- **npm** o **yarn**  
+- **.NET 8 SDK**  
+- **SQLite3** (opcional para inspeccionar la DB manualmente)  
+
+---
+
+## ⚙️ Instalación del Backend (API en .NET)
+1. Abrir terminal en la carpeta `backend/`.
+2. Restaurar dependencias:
+   ```bash
+   dotnet restore
+   ```
+3. Crear o actualizar la base de datos:
+   ```bash
+   dotnet ef database update
+   ```
+   > Si no tenés instalado EF Tools:
+   ```bash
+   dotnet tool install --global dotnet-ef
+   ```
+4. Levantar el servidor:
+   ```bash
+   dotnet run
+   ```
+   - La API quedará en: **http://localhost:5000**
+
+---
+
+## 🎨 Instalación del Frontend (React + Vite)
+1. Abrir terminal en la carpeta `frontend/`.
+2. Instalar dependencias:
+   ```bash
+   npm install
+   ```
+3. Iniciar servidor de desarrollo:
+   ```bash
+   npm run dev
+   ```
+   - La app quedará en: **http://localhost:5173**
+
+---
+
+## 🔗 Conexión Front ↔ Back
+- El frontend está configurado para llamar a la API en:
+  ```
+  http://localhost:5000/api
+  ```
+- Revisar `frontend/src/api.js` si necesitás cambiar la URL base.
+
+---
+
+## 👤 Usuarios iniciales
+Si querés crear usuarios manualmente:
+1. Insertar en la DB SQLite (ejemplo con `sqlite3 gymplanner.db`).
+2. O usar el endpoint de registro (si está habilitado).
+
+Ejemplo `curl` para login:
+```bash
+curl -X POST http://localhost:5000/api/auth/login   -H "Content-Type: application/json"   -d '{"username":"admin","password":"admin123"}'
+```
+
+---
+
+## 🚀 Producción
+- **Backend**:  
+  ```bash
+  dotnet publish -c Release -o out
+  ```
+  Ejecutar con:
+  ```bash
+  dotnet out/GymPlannerApi.dll
+  ```
+
+- **Frontend**:  
+  ```bash
+  npm run build
+  ```
+  Los archivos quedarán en `dist/`, listos para deploy (ej: Vercel, Netlify, Nginx).
+
+---
+
+📌 ¡Listo! Con esto podés levantar tu entorno de desarrollo local en **2 pasos**:  
+1. `dotnet run` (backend)  
+2. `npm run start` (frontend)
